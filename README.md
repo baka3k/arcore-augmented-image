@@ -195,3 +195,8 @@ object ArResources {
     lateinit var videoPlayer: MediaPlayer  
 }
 ```
+## Demo video 
+[![Watch the video]](https://github.com/baka3k/arcore-augmented-image/blob/main/demo/earthdemo.mp4)
+
+[![Watch the video]](https://github.com/baka3k/arcore-augmented-image/blob/main/demo/karendemo.mp4)
+
