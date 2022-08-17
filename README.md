@@ -196,7 +196,6 @@ object ArResources {
 }
 ```
 ## Demo video 
-[![Watch the video]](https://github.com/baka3k/arcore-augmented-image/blob/main/demo/earthdemo.mp4)
 
-[![Watch the video]](https://github.com/baka3k/arcore-augmented-image/blob/main/demo/karendemo.mp4)
+https://user-images.githubusercontent.com/8104076/185200009-1cd2a577-4fed-4a32-a9e0-d3facc92cfd4.mp4
 
