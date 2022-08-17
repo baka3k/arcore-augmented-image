@@ -1,0 +1,2 @@
+000.jpg|input/000.jpg
+001.jpg|input/001.jpg
