@@ -50,7 +50,8 @@ object ARConfig {
                 }
             // add photo to detector
             // we can add many photo at runtime
-            augmentedImageDatabase.addImage(it, augmentedImageBitmap)
+//            augmentedImageDatabase.addImage(it, augmentedImageBitmap)
+            augmentedImageDatabase.addImage(it, augmentedImageBitmap,0.0856F)
         }
         config.augmentedImageDatabase = augmentedImageDatabase
     }
@@ -70,6 +71,7 @@ object ARConfig {
 
 
     private const val IMAGE_DATABASE = "arcore.imgdb"
-    private const val USE_IMAGE_TARGET = false // select a special target image
-    private val IMAGES = arrayOf("000.jpg","001.jpg")
+    private const val USE_IMAGE_TARGET = true // select a special target image
+//    private val IMAGES = arrayOf("000.jpg","001.jpg")
+    private val IMAGES = arrayOf("003.png","004.png")
 }

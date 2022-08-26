@@ -23,6 +23,8 @@ object ArResources {
         }
         earthViewRenderable = ViewRenderable.builder().setView(context, R.layout.layout_earth)
             .setVerticalAlignment(ViewRenderable.VerticalAlignment.CENTER).build()
+        cardViewRenderable = ViewRenderable.builder().setView(context, R.layout.layout_card)
+            .setVerticalAlignment(ViewRenderable.VerticalAlignment.CENTER).build()
         return CompletableFuture.allOf(
             earthViewRenderable,
             videoRenderable
@@ -38,6 +40,7 @@ object ArResources {
     }
 
     lateinit var earthViewRenderable: CompletableFuture<ViewRenderable>
+    lateinit var cardViewRenderable: CompletableFuture<ViewRenderable>
     val viewRenderableRotation = Quaternion(Vector3(1f, 0f, 0f), -90f)
 
     lateinit var videoRenderable: CompletableFuture<ModelRenderable>

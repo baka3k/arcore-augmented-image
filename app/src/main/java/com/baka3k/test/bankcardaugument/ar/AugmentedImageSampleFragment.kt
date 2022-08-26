@@ -8,7 +8,9 @@ import com.baka3k.test.bankcardaugument.ar.config.ARConfig
 import com.baka3k.test.bankcardaugument.ar.node.AugmentedImageAnchorNode
 import com.baka3k.test.bankcardaugument.ar.resource.ArResources
 import com.baka3k.test.bankcardaugument.ar.scene.EarthScene
+import com.baka3k.test.bankcardaugument.ar.scene.BankCardAugmentedImageAnchorNode
 import com.baka3k.test.bankcardaugument.ar.scene.IdolScene
+import com.baka3k.test.bankcardaugument.ar.scene.TestScene
 import com.baka3k.test.bankcardaugument.utils.GlUtils
 import com.baka3k.test.bankcardaugument.utils.Logger
 import com.google.ar.core.AugmentedImage
@@ -87,6 +89,7 @@ open class AugmentedImageSampleFragment : ArFragment() {
 
     private fun onUpdateFrame(frameTime: FrameTime?) {
         val frame = arSceneView.arFrame
+
         if (frame == null || frame.camera.trackingState != TrackingState.TRACKING) {
             //Logger.w("#onUpdateFrame() Frame is not stable - do not handle $frame")
             return
@@ -102,6 +105,10 @@ open class AugmentedImageSampleFragment : ArFragment() {
                         clearArView()
                         if (image.name.equals("001.jpg")) {
                             createIdolArNode(image)
+                        } else if (image.name.equals("004.png")) {
+                            createCardNode(image)
+                        } else if (image.name.equals("003.png")) {
+                            createCardNodeType2(image)
                         } else {
                             createEarthArNode(image)
                         }
@@ -116,14 +123,27 @@ open class AugmentedImageSampleFragment : ArFragment() {
                     }
                 }
                 else -> {
-                    Logger.w("#onUpdateFrame() Unknow State - Do nothing ${image.trackingState}")
+                    Logger.w("#onUpdateFrame() Unknow State - Do nothing ${image.trackingState} ${image.name}")
                 }
             }
         }
     }
 
+    private fun createCardNodeType2(image: AugmentedImage) {
+        Logger.w("#onUpdateFrame() createCardNodeType22222222 ${image.trackingState}")
+        val node = TestScene().init(image)
+        createBankCardArNode(image, node)
+    }
+
+    private fun createCardNode(image: AugmentedImage) {
+        Logger.w("#onUpdateFrame() createCardNode ${image.trackingState}")
+        val node = TestScene().init(image)
+        createBankCardArNode(image, node)
+    }
+
 
     private fun createEarthArNode(image: AugmentedImage) {
+        Logger.w("#onUpdateFrame() createEarthArNode ${image.trackingState}")
         val node = EarthScene().init(image)
         createArNode(image, node)
     }
@@ -142,6 +162,17 @@ open class AugmentedImageSampleFragment : ArFragment() {
         trackableMap[image.name] = node
         arSceneView.scene.addChild(node)
 
+        Toast.makeText(context, "${image.name} added", Toast.LENGTH_LONG).show()
+    }
+
+    private fun createBankCardArNode(
+        image: AugmentedImage,
+        node: BankCardAugmentedImageAnchorNode
+    ) {
+        Logger.d("#createArNode() : ${image.name}(${image.index}), pose: ${image.centerPose}, ex: ${image.extentX}, ez: ${image.extentZ}")
+        currentNodeName = image.name
+        trackableMap[image.name] = node
+        arSceneView.scene.addChild(node)
         Toast.makeText(context, "${image.name} added", Toast.LENGTH_LONG).show()
     }
 
