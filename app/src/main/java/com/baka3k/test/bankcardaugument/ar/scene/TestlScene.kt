@@ -15,7 +15,7 @@ class TestScene : BankCardAugmentedImageAnchorNode() {
     override val imageHeight: Float = 0.5398F
 
     private var currentSceneIndex = 0
-    private val sceneList = mutableListOf<HahaAugmentedImageNodeGroup>()
+    private val sceneList = mutableListOf<BankCardAugmentedImageNodeGroup>()
     override fun onInit() {
         sceneList.add(CardAugmentedImageGroup().init(anchorNode = this))
     }
@@ -40,9 +40,9 @@ class TestScene : BankCardAugmentedImageAnchorNode() {
         changeScene((currentSceneIndex - 1 + sceneList.size) % sceneList.size)
     }
 }
-abstract class HahaAugmentedImageNodeGroup : Node() {
+abstract class BankCardAugmentedImageNodeGroup : Node() {
     lateinit var anchorNode: BankCardAugmentedImageAnchorNode
-    fun init(anchorNode: BankCardAugmentedImageAnchorNode): HahaAugmentedImageNodeGroup {
+    fun init(anchorNode: BankCardAugmentedImageAnchorNode): BankCardAugmentedImageNodeGroup {
         this.isEnabled = false
         this.anchorNode = anchorNode
         name = this.javaClass.simpleName.replace("AugmentedImageNodeGroup", "")
@@ -53,7 +53,7 @@ abstract class HahaAugmentedImageNodeGroup : Node() {
     protected abstract fun onInit()
 }
 
-class CardAugmentedImageGroup : HahaAugmentedImageNodeGroup() {
+class CardAugmentedImageGroup : BankCardAugmentedImageNodeGroup() {
     override fun onInit() {
         CardAugmentedImageNode().init(anchorNode, this)
     }
@@ -82,7 +82,7 @@ abstract class BankCardNode(resource: CompletableFuture<*>? = null) : Node() {
     }
     fun init(
         anchorNode: BankCardAugmentedImageAnchorNode,
-        parrentNode: HahaAugmentedImageNodeGroup? = null
+        parrentNode: BankCardAugmentedImageNodeGroup? = null
     ): BankCardNode {
         this.anchorNode = anchorNode
         name = this.javaClass.simpleName.replace("AugmentedImageNode", "")
