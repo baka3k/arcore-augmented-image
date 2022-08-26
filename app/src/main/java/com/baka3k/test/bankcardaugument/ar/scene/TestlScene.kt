@@ -125,7 +125,7 @@ abstract class BankCardAugmentedImageAnchorNode : AugmentedImageAnchorNode() {
     private fun updateSizeNode(width: Float, height: Float) {
         arWidth = width
         arHeight = height
-        val ratio = arWidth/arHeight
+        val ratio = 1//arWidth/arHeight
         scaledWidth = arWidth / imageWidth
         scaledHeight = arHeight / imageHeight
         scaledHeight = scaledWidth / ratio
