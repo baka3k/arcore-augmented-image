@@ -1,4 +1,3 @@
-
 # ARCore: Augmented Images API & Sceneform
 
 Khác với nhiều tiện ích khác, do giới hạn về phân cứng nên ARCore chỉ support trên 1 số dòng device nhất định với các API nhất định, danh sách các loại devices supported các bạn tham khảo tại link bên dưới, và chuẩn bị cho mình 1 chiếc xịn sò trước khi bắt tay vào thử nghiệm nhé:
@@ -16,6 +15,10 @@ Việc này được thực hiện tương đối dễ dàng với ARCore
 Note: Ảnh có thể được add thêm tại runtime, khi ứng dụng đang hoạt động.
 
 Google cung cấp một tool có tên là **[arcoreimg](https://developers.google.com/ar/develop/augmented-images/arcoreimg)**,  gồm 2 chức năng chính
+
+https://user-images.githubusercontent.com/8104076/187025547-1bac9196-8c32-4665-9e53-508d4ca07d89.mp4
+
+
 
  1. Kiểm tra ảnh đưa vào nhận dạng:
 
@@ -98,7 +101,9 @@ private fun setImageAugmentTarget(config: Config, session: Session?, context: Co
                 )  
             }  
   // add photo to detector  
- // we can add many photo at runtime  augmentedImageDatabase.addImage(it, augmentedImageBitmap)  
+ // we can add many photo at runtime  
+ 	augmentedImageDatabase.addImage(it, augmentedImageBitmap)  
+	// augmentedImageDatabase.addImage(it, augmentedImageBitmap,0.0856F) // use for bankcard target
     }  
   config.augmentedImageDatabase = augmentedImageDatabase  
 }
@@ -196,6 +201,11 @@ object ArResources {
 }
 ```
 ## Demo video 
+https://user-images.githubusercontent.com/8104076/187025720-d1d77d8f-a067-4c6f-9364-84f18c0edad1.mp4
 
-https://user-images.githubusercontent.com/8104076/185200009-1cd2a577-4fed-4a32-a9e0-d3facc92cfd4.mp4
+
+
+
+https://user-images.githubusercontent.com/8104076/187025734-e667f2f9-1c7f-4241-b184-a673ebdfb1cd.mp4
+
 
