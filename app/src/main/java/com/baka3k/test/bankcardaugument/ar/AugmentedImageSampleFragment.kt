@@ -105,10 +105,8 @@ open class AugmentedImageSampleFragment : ArFragment() {
                         clearArView()
                         if (image.name.equals("001.jpg")) {
                             createIdolArNode(image)
-                        } else if (image.name.equals("004.png")) {
+                        } else if (image.name.equals("004.png") || image.name.equals("003.png")) {
                             createCardNode(image)
-                        } else if (image.name.equals("003.png")) {
-                            createCardNodeType2(image)
                         } else {
                             createEarthArNode(image)
                         }
@@ -129,16 +127,10 @@ open class AugmentedImageSampleFragment : ArFragment() {
         }
     }
 
-    private fun createCardNodeType2(image: AugmentedImage) {
-        Logger.w("#onUpdateFrame() createCardNodeType22222222 ${image.trackingState}")
-        val node = BankCardScene().init(image)
-        createBankCardArNode(image, node)
-    }
-
     private fun createCardNode(image: AugmentedImage) {
         Logger.w("#onUpdateFrame() createCardNode ${image.trackingState}")
         val node = BankCardScene().init(image)
-        createBankCardArNode(image, node)
+        createArNode(image, node)
     }
 
 
@@ -158,21 +150,11 @@ open class AugmentedImageSampleFragment : ArFragment() {
         node: AugmentedImageAnchorNode
     ) {
         Logger.d("#createArNode() : ${image.name}(${image.index}), pose: ${image.centerPose}, ex: ${image.extentX}, ez: ${image.extentZ}")
+
         currentNodeName = image.name
         trackableMap[image.name] = node
         arSceneView.scene.addChild(node)
 
-        Toast.makeText(context, "${image.name} added", Toast.LENGTH_LONG).show()
-    }
-
-    private fun createBankCardArNode(
-        image: AugmentedImage,
-        node: BankCardAugmentedImageAnchorNode
-    ) {
-        Logger.d("#createArNode() : ${image.name}(${image.index}), pose: ${image.centerPose}, ex: ${image.extentX}, ez: ${image.extentZ}")
-        currentNodeName = image.name
-        trackableMap[image.name] = node
-        arSceneView.scene.addChild(node)
         Toast.makeText(context, "${image.name} added", Toast.LENGTH_LONG).show()
     }
 
