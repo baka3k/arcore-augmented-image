@@ -7,10 +7,9 @@ import android.widget.Toast
 import com.baka3k.test.bankcardaugument.ar.config.ARConfig
 import com.baka3k.test.bankcardaugument.ar.node.AugmentedImageAnchorNode
 import com.baka3k.test.bankcardaugument.ar.resource.ArResources
-import com.baka3k.test.bankcardaugument.ar.scene.EarthScene
-import com.baka3k.test.bankcardaugument.ar.scene.BankCardAugmentedImageAnchorNode
-import com.baka3k.test.bankcardaugument.ar.scene.IdolScene
 import com.baka3k.test.bankcardaugument.ar.scene.BankCardScene
+import com.baka3k.test.bankcardaugument.ar.scene.EarthScene
+import com.baka3k.test.bankcardaugument.ar.scene.IdolScene
 import com.baka3k.test.bankcardaugument.utils.GlUtils
 import com.baka3k.test.bankcardaugument.utils.Logger
 import com.google.ar.core.AugmentedImage
@@ -180,5 +179,23 @@ open class AugmentedImageSampleFragment : ArFragment() {
         val config = super.getSessionConfiguration(session)
         ARConfig.configArTarget(session, config, requireContext())
         return config
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateCameraConfig()
+    }
+
+    private fun updateCameraConfig() {
+        val session = Session(context)
+        val configuration = Config(session)
+        configuration.focusMode = Config.FocusMode.AUTO // auto focus
+        configuration.updateMode = Config.UpdateMode.LATEST_CAMERA_IMAGE
+        configuration.depthMode = Config.DepthMode.AUTOMATIC
+        session.configure(configuration)
+        // camera auto fix focust at time set autofocus, so we need trick by pause and resume again
+        arSceneView.pause()
+        arSceneView.setupSession(session)
+        arSceneView.resume()
     }
 }
