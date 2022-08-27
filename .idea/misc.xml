@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidProjects/arcore-augmented-image/app/src/main/res/drawable/bg_white.xml" value="0.4185" />
+        <entry key="..\:/AndroidProjects/arcore-augmented-image/app/src/main/res/layout/adapter_item.xml" value="0.32083333333333336" />
         <entry key="..\:/AndroidProjects/arcore-augmented-image/app/src/main/res/layout/layout_bottom.xml" value="0.5546875" />
         <entry key="..\:/AndroidProjects/arcore-augmented-image/app/src/main/res/layout/layout_card.xml" value="0.32083333333333336" />
         <entry key="..\:/AndroidProjects/arcore-augmented-image/app/src/main/res/layout/layout_right.xml" value="0.5546875" />

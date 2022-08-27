@@ -2,8 +2,11 @@ package com.baka3k.test.bankcardaugument.ar
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import com.baka3k.test.bankcardaugument.R
 import com.baka3k.test.bankcardaugument.ar.config.ARConfig
 import com.baka3k.test.bankcardaugument.ar.node.AugmentedImageAnchorNode
 import com.baka3k.test.bankcardaugument.ar.resource.ArResources
@@ -83,7 +86,13 @@ open class AugmentedImageSampleFragment : ArFragment() {
         arSceneView.scene.addOnUpdateListener(::onUpdateFrame)
         ArResources.init(this.requireContext()).handle { _, _ ->
             view?.visibility = View.VISIBLE
+            view?.findViewById<View>(R.id.rightView)?.setOnClickListener {
+                Log.d("test","Clicked")
+            }
         }
+//        ArResources.cardViewRenderable.get().view.findViewById<View>(R.id.rightView).setOnClickListener {
+////            Log.d("test","Clicked")
+////        }
     }
 
     private fun onUpdateFrame(frameTime: FrameTime?) {
@@ -130,6 +139,15 @@ open class AugmentedImageSampleFragment : ArFragment() {
         Logger.w("#onUpdateFrame() createCardNode ${image.trackingState}")
         val node = BankCardScene().init(image)
         createArNode(image, node)
+        loadTestData()
+
+    }
+    private fun loadTestData() {
+        val rootView = ArResources.cardViewRenderable.get().view
+        if (rootView != null) {
+            val recyclerView = rootView.findViewById<RecyclerView>(R.id.recycleView)
+            recyclerView?.adapter = TestAdapter()
+        }
     }
 
 
