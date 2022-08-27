@@ -17,17 +17,13 @@ abstract class AugmentedImageAnchorNode : AnchorNode() {
 
     // the size get from AugmentedImage
     var arWidth: Float = 1f
-        private set
     var arHeight: Float = 1f
-        private set
 
     // get scaled size from  arSize / imageSize
     var scaledWidth: Float = 1f
-        private set
 
     var scaledHeight: Float = 1f
-        private set
-    fun init(image: AugmentedImage): AugmentedImageAnchorNode {
+    open fun init(image: AugmentedImage): AugmentedImageAnchorNode {
         Logger.d("${javaClass.simpleName} initialized size(${image.extentX}/${image.extentZ}")
         // Set the anchor based on the center of the image.
         anchor = image.createAnchor(image.centerPose)
