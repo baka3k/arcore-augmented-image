@@ -10,10 +10,10 @@ import com.google.ar.sceneform.rendering.Renderable
 import java.util.concurrent.CompletableFuture
 import kotlin.math.abs
 
-class TestScene : BankCardAugmentedImageAnchorNode() {
+class BankCardScene : BankCardAugmentedImageAnchorNode() {
 //    override val imageWidth: Float = 0.856F
 //    override val imageHeight: Float = 0.5398F
-    override val imageWidth: Float = 1F
+    override val imageWidth: Float = 1F // 1m = 250dp
     override val imageHeight: Float = 0.5398F/0.856F
     private var currentSceneIndex = 0
     private val sceneList = mutableListOf<BankCardAugmentedImageNodeGroup>()

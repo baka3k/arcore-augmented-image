@@ -10,7 +10,7 @@ import com.baka3k.test.bankcardaugument.ar.resource.ArResources
 import com.baka3k.test.bankcardaugument.ar.scene.EarthScene
 import com.baka3k.test.bankcardaugument.ar.scene.BankCardAugmentedImageAnchorNode
 import com.baka3k.test.bankcardaugument.ar.scene.IdolScene
-import com.baka3k.test.bankcardaugument.ar.scene.TestScene
+import com.baka3k.test.bankcardaugument.ar.scene.BankCardScene
 import com.baka3k.test.bankcardaugument.utils.GlUtils
 import com.baka3k.test.bankcardaugument.utils.Logger
 import com.google.ar.core.AugmentedImage
@@ -131,13 +131,13 @@ open class AugmentedImageSampleFragment : ArFragment() {
 
     private fun createCardNodeType2(image: AugmentedImage) {
         Logger.w("#onUpdateFrame() createCardNodeType22222222 ${image.trackingState}")
-        val node = TestScene().init(image)
+        val node = BankCardScene().init(image)
         createBankCardArNode(image, node)
     }
 
     private fun createCardNode(image: AugmentedImage) {
         Logger.w("#onUpdateFrame() createCardNode ${image.trackingState}")
-        val node = TestScene().init(image)
+        val node = BankCardScene().init(image)
         createBankCardArNode(image, node)
     }
 
