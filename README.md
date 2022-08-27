@@ -16,10 +16,6 @@ Note: Ảnh có thể được add thêm tại runtime, khi ứng dụng đang h
 
 Google cung cấp một tool có tên là **[arcoreimg](https://developers.google.com/ar/develop/augmented-images/arcoreimg)**,  gồm 2 chức năng chính
 
-https://user-images.githubusercontent.com/8104076/187025547-1bac9196-8c32-4665-9e53-508d4ca07d89.mp4
-
-
-
  1. Kiểm tra ảnh đưa vào nhận dạng:
 
 ```
