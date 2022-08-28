@@ -14,7 +14,7 @@ class CardRecognizer(private val cameraInfo: CameraInfo) {
         TextRecognizerOptions.DEFAULT_OPTIONS
     )
 
-    private fun extractCardDetail(image: Image, callback: (CardDetails?) -> Unit) {
+    fun extractCardDetail(image: Image, callback: (CardDetails?) -> Unit) {
         val imageInput = InputImage.fromMediaImage(image, cameraInfo.getRotation())
         textRecognizer.process(imageInput).addOnSuccessListener {
             val text = it.text
@@ -46,6 +46,7 @@ class CardRecognizer(private val cameraInfo: CameraInfo) {
                 extractCardDetail(bitmap) { cardDetail ->
                     callback(cardDetail)
                 }
+                bitmap.recycle()
             } else {
                 callback(null)
             }
