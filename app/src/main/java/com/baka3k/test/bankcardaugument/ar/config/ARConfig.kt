@@ -78,7 +78,5 @@ object ARConfig {
 
     private const val IMAGE_DATABASE = "arcore.imgdb"
     private const val USE_IMAGE_TARGET = true // select a special target image
-
-    //    private val IMAGES = arrayOf("000.jpg","001.jpg")
-    private val IMAGES = arrayOf("003.png", "004.png")
+    private val IMAGES = arrayOf("003.png", "004.png","001.jpg","000.jpg")
 }
