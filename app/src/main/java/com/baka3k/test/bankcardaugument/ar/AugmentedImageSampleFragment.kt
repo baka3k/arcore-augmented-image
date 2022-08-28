@@ -15,11 +15,10 @@ import com.baka3k.test.bankcardaugument.ar.scene.EarthScene
 import com.baka3k.test.bankcardaugument.ar.scene.IdolScene
 import com.baka3k.test.bankcardaugument.utils.GlUtils
 import com.baka3k.test.bankcardaugument.utils.Logger
-import com.google.ar.core.AugmentedImage
-import com.google.ar.core.Config
-import com.google.ar.core.Session
-import com.google.ar.core.TrackingState
+import com.google.ar.core.*
+import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.FrameTime
+import com.google.ar.sceneform.Sun
 import com.google.ar.sceneform.ux.ArFragment
 import kotlin.math.abs
 
@@ -136,6 +135,7 @@ open class AugmentedImageSampleFragment : ArFragment() {
         loadTestData()
 
     }
+
     private fun loadTestData() {
         val rootView = ArResources.cardViewRenderable.get().view
         if (rootView != null) {
@@ -170,6 +170,7 @@ open class AugmentedImageSampleFragment : ArFragment() {
     }
 
     override fun onPause() {
+        arSceneView.scene.removeOnUpdateListener(::onUpdateFrame)
         clearArView()
         super.onPause()
     }
@@ -181,6 +182,20 @@ open class AugmentedImageSampleFragment : ArFragment() {
         trackableMap.clear()
     }
 
+    fun reset() {
+        clearArView()
+        val children = ArrayList(arSceneView.scene.children)
+        children.forEach { node ->
+            if (node is AnchorNode) {
+                if (node.anchor != null) {
+                    node.anchor?.detach()
+                }
+            }
+            if (node !is com.google.ar.sceneform.Camera && node !is Sun) {
+                node.setParent(null)
+            }
+        }
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
