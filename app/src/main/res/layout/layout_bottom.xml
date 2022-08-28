@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/bTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -17,14 +17,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/subTitle"
+        android:id="@+id/bSubTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="Hello - sub Title bla bla"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/bTitle" />
 
     <ImageView
         android:layout_width="0dp"
@@ -34,5 +34,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/subTitle" />
+        app:layout_constraintTop_toBottomOf="@id/bSubTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

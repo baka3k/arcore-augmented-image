@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.baka3k.test.bankcardaugument.R
@@ -13,18 +14,25 @@ import com.baka3k.test.bankcardaugument.ar.resource.ArResources
 import com.baka3k.test.bankcardaugument.ar.scene.BankCardScene
 import com.baka3k.test.bankcardaugument.ar.scene.EarthScene
 import com.baka3k.test.bankcardaugument.ar.scene.IdolScene
+import com.baka3k.test.bankcardaugument.ocr.CameraInfo
+import com.baka3k.test.bankcardaugument.ocr.CardDetails
+import com.baka3k.test.bankcardaugument.ocr.CardRecognizer
 import com.baka3k.test.bankcardaugument.utils.GlUtils
 import com.baka3k.test.bankcardaugument.utils.Logger
-import com.google.ar.core.AugmentedImage
-import com.google.ar.core.Config
-import com.google.ar.core.Session
-import com.google.ar.core.TrackingState
+import com.google.ar.core.*
+import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.FrameTime
+import com.google.ar.sceneform.Sun
 import com.google.ar.sceneform.ux.ArFragment
 import kotlin.math.abs
 
 open class AugmentedImageSampleFragment : ArFragment() {
     private val trackableMap = mutableMapOf<String, AugmentedImageAnchorNode>()
+    private var handlerThread: ImageAnalysisHandlerThread? = null
+    private var cardDetails: CardDetails? = null
+    private var bottomTitle: TextView? = null
+    private var bottomSubtitle: TextView? = null
+    private var recyclerView: RecyclerView? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -86,13 +94,7 @@ open class AugmentedImageSampleFragment : ArFragment() {
         arSceneView.scene.addOnUpdateListener(::onUpdateFrame)
         ArResources.init(this.requireContext()).handle { _, _ ->
             view?.visibility = View.VISIBLE
-            view?.findViewById<View>(R.id.rightView)?.setOnClickListener {
-                Log.d("test","Clicked")
-            }
         }
-//        ArResources.cardViewRenderable.get().view.findViewById<View>(R.id.rightView).setOnClickListener {
-////            Log.d("test","Clicked")
-////        }
     }
 
     private fun onUpdateFrame(frameTime: FrameTime?) {
@@ -133,6 +135,27 @@ open class AugmentedImageSampleFragment : ArFragment() {
                 }
             }
         }
+        getCardInformation()
+    }
+
+    private fun getCardInformation() {
+        if (cardDetails == null || cardDetails?.number.isNullOrEmpty()) {
+            try {
+                val image = arSceneView.arFrame?.acquireCameraImage()
+                if (image != null) {
+                    handlerThread?.scanCardInfor(image) {
+                        Logger.d("#getCardInformation() cardinfor $it")
+                        cardDetails = it
+                        if (cardDetails != null) {
+                            bottomTitle?.text = cardDetails?.owner
+                            bottomSubtitle?.text = cardDetails?.number
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Logger.e("#getCardInformation() err $e")
+            }
+        }
     }
 
     private fun createCardNode(image: AugmentedImage) {
@@ -142,11 +165,19 @@ open class AugmentedImageSampleFragment : ArFragment() {
         loadTestData()
 
     }
+
     private fun loadTestData() {
         val rootView = ArResources.cardViewRenderable.get().view
         if (rootView != null) {
-            val recyclerView = rootView.findViewById<RecyclerView>(R.id.recycleView)
+            recyclerView = rootView.findViewById<RecyclerView>(R.id.recycleView)
             recyclerView?.adapter = TestAdapter()
+
+            bottomTitle = rootView.findViewById<TextView>(R.id.bTitle)
+            bottomSubtitle = rootView.findViewById<TextView>(R.id.bSubTitle)
+            if (cardDetails != null) {
+                bottomTitle?.text = cardDetails?.owner
+                bottomSubtitle?.text = cardDetails?.number
+            }
         }
     }
 
@@ -176,6 +207,7 @@ open class AugmentedImageSampleFragment : ArFragment() {
     }
 
     override fun onPause() {
+        arSceneView.scene.removeOnUpdateListener(::onUpdateFrame)
         clearArView()
         super.onPause()
     }
@@ -187,10 +219,32 @@ open class AugmentedImageSampleFragment : ArFragment() {
         trackableMap.clear()
     }
 
+    fun reset() {
+        clearArView()
+        val children = ArrayList(arSceneView.scene.children)
+        children.forEach { node ->
+            if (node is AnchorNode) {
+                if (node.anchor != null) {
+                    node.anchor?.detach()
+                }
+            }
+            if (node !is com.google.ar.sceneform.Camera && node !is Sun) {
+                node.setParent(null)
+            }
+        }
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         GlUtils.configOpenGLMode(context)
+        handlerThread = ImageAnalysisHandlerThread(CardRecognizer(CameraInfo(requireActivity())))
+        handlerThread?.start()
+    }
+
+    override fun onDetach() {
+        handlerThread?.quit()
+        handlerThread = null
+        super.onDetach()
     }
 
     override fun getSessionConfiguration(session: Session?): Config {
