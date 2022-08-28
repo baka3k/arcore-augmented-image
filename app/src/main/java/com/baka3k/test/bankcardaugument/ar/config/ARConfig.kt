@@ -52,6 +52,7 @@ object ARConfig {
             // we can add many photo at runtime
             if (it == "003.png" || it == "004.png") {
                 // 003,004 are bankcard, we add width of photo to optimize detection
+                //0.0856F = 8.56 cm width of bankcard
                 augmentedImageDatabase.addImage(it, augmentedImageBitmap, 0.0856F)
             } else {
                 augmentedImageDatabase.addImage(it, augmentedImageBitmap)
