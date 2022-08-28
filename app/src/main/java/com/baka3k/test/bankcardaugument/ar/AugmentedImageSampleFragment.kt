@@ -86,13 +86,7 @@ open class AugmentedImageSampleFragment : ArFragment() {
         arSceneView.scene.addOnUpdateListener(::onUpdateFrame)
         ArResources.init(this.requireContext()).handle { _, _ ->
             view?.visibility = View.VISIBLE
-            view?.findViewById<View>(R.id.rightView)?.setOnClickListener {
-                Log.d("test","Clicked")
-            }
         }
-//        ArResources.cardViewRenderable.get().view.findViewById<View>(R.id.rightView).setOnClickListener {
-////            Log.d("test","Clicked")
-////        }
     }
 
     private fun onUpdateFrame(frameTime: FrameTime?) {
